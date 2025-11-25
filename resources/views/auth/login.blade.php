@@ -1,59 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Link Manager - Login</title>
 
-@extends('layouts.guest')
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #abcdef;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-@section('content')
-<div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style="background-color: #abcdef;">
-  <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-    <div class="flex items-center justify-center mb-6">
-      <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: #123456;">
-        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-    </div>
+    .login-container {
+      background: #fff;
+      width: 100%;
+      max-width: 430px;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-    <h1 class="text-center mb-2 text-lg font-semibold">Company Link Manager</h1>
-    <p class="text-center text-gray-600 mb-6">Sign in to access your dashboard</p>
+    .icon-wrapper {
+      width: 55px;
+      height: 55px;
+      background: #123456;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
 
-    <form method="POST" action="{{ route('login') }}" class="space-y-4">
-      @csrf
+    h1 {
+      text-align: center;
+      margin-bottom: 5px;
+      font-size: 20px;
+    }
 
-      <div>
-        <label for="email" class="block mb-2 text-gray-700">Email</label>
-        <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#123456] transition-shadow"
-               placeholder="your.email@company.com" />
-        @error('email')
-          <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-        @enderror
-      </div>
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
 
-      <div>
-        <label for="password" class="block mb-2 text-gray-700">Password</label>
-        <input id="password" name="password" type="password" required
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#123456] transition-shadow"
-               placeholder="Enter your password" />
-        @error('password')
-          <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-        @enderror
-      </div>
+    label {
+      font-weight: bold;
+      color: #444;
+      display: block;
+      margin-bottom: 6px;
+    }
 
-      @if(session('error'))
-        <div class="text-red-600 text-center text-sm">{{ session('error') }}</div>
-      @endif
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
 
-      <button type="submit"
-              class="w-full py-3 text-white rounded-lg transition-colors hover:opacity-90"
-              style="background-color: #123456;">
-        Sign In
-      </button>
+    input:focus {
+      outline: none;
+      border-color: #123456;
+      box-shadow: 0 0 3px #123456;
+    }
+
+    .btn {
+      width: 100%;
+      background: #123456;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .demo-box {
+      margin-top: 25px;
+      background: #abcdef;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-container">
+    
+    <!-- LOGIN ICON -->
+    <div class="icon-wrapper">➡️</div>
+
+    <h1>Company Link Manager</h1>
+    <p class="subtitle">Sign in to access your dashboard</p>
+
+     <!-- Form -->
+        <form method="POST" action="{{ route('login') }}" class="space-y-6">
+            @csrf
+        {{-- Email --}}
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="your.email@company.com" required autofocus autocomplete="username" value="{{ old('email') }}" />
+            @error('email')
+                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+            @enderror
+        </div>
+
+      {{-- Password --}}
+        <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password" />
+            @error('password')
+                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+            @enderror
+        </div>
+      
+      
+
+       {{-- Error --}}
+        @if(session('error'))
+            <div class="text-red-600 text-center text-sm">{{ session('error') }}</div>
+        @endif
+
+      <button type="submit" class="btn">Sign In</button>
     </form>
 
-    <div class="mt-6 text-center text-sm text-gray-600">
-      <a href="{{ route('password.request') }}" class="text-indigo-700 hover:underline">Forgot your password?</a>
-      <span class="mx-2">·</span>
-      <a href="mailto:admin@example.com" class="text-indigo-700 hover:underline">Need help?</a>
-    </div>
+
+    <!-- Footer Links -->
+        <div class="mt-8 text-center text-sm text-gray-600">
+            <a href="{{ route('password.request') }}" class="text-indigo-600 hover:underline">Forgot your password?</a>
+            <span class="mx-2 text-gray-400">·</span>
+            <a href="mailto:support@company.com" class="text-indigo-600 hover:underline">Need help?</a>
+        </div>
+
   </div>
-</div>
-@endsection
+
+</body>
+</html>
