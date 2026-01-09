@@ -12,10 +12,10 @@ class AdminSeeder extends Seeder
     {
         // Create admin (only this credential allowed as admin)
         User::updateOrCreate(
-            ['email' => 'admin@company.com'],
+            ['email' => 'admin@Acornit.com'],
             [
                 'name' => 'Admin User',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('admin123Laka'),
                 'role' => 'admin',
             ]
         );
