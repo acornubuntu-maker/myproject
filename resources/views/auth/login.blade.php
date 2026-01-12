@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -108,53 +109,51 @@
 <body>
 
   <div class="login-container">
-    
+
     <!-- LOGIN ICON -->
     <div class="icon-wrapper">➡️</div>
 
     <h1>Company Link Manager</h1>
     <p class="subtitle">Sign in to access your dashboard</p>
 
-     <!-- Form -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-6">
-            @csrf
-        {{-- Email --}}
-        <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="your.email@company.com" required autofocus autocomplete="username" value="{{ old('email') }}" />
-            @error('email')
-                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
-            @enderror
-        </div>
+    <!-- Form -->
+    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+      @csrf
+      {{-- Email --}}
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="your.email@company.com" required autofocus
+          autocomplete="username" value="{{ old('email') }}" />
+        @error('email')
+          <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+        @enderror
+      </div>
 
       {{-- Password --}}
-        <div>
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password" />
-            @error('password')
-                    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
-            @enderror
-        </div>
-      
-      
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Enter your password" required
+          autocomplete="current-password" />
+        @error('password')
+          <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+        @enderror
+      </div>
 
-       {{-- Error --}}
-        @if(session('error'))
-            <div class="text-red-600 text-center text-sm">{{ session('error') }}</div>
-        @endif
+
+
+      {{-- Error --}}
+      @if(session('error'))
+        <div class="text-red-600 text-center text-sm">{{ session('error') }}</div>
+      @endif
 
       <button type="submit" class="btn">Sign In</button>
     </form>
 
 
-    <!-- Footer Links -->
-        <div class="mt-8 text-center text-sm text-gray-600">
-            <a href="{{ route('password.request') }}" class="text-indigo-600 hover:underline">Forgot your password?</a>
-            <span class="mx-2 text-gray-400">·</span>
-            <a href="mailto:support@company.com" class="text-indigo-600 hover:underline">Need help?</a>
-        </div>
+
 
   </div>
 
 </body>
+
 </html>
