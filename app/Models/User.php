@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $role
+ * @property string|null $profile_photo_path
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property mixed $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $group_id
+ * @property-read \App\Models\Group|null $group
+ * @property-read string|null $profile_photo_url
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -58,6 +73,6 @@ class User extends Authenticatable
     // helper for blade
     public function getProfilePhotoUrlAttribute()
     {
-        return $this->profile_photo_path ? asset('storage/'.$this->profile_photo_path) : null;
+        return $this->profile_photo_path ? asset('storage/' . $this->profile_photo_path) : null;
     }
 }

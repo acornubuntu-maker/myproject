@@ -11,9 +11,20 @@ use Illuminate\Support\Facades\Auth;
 class LinkController extends Controller
 {
     // list
-    public function index()
+    public function index(Request $request)
     {
-        $links = Link::orderBy('created_at','desc')->get();
+        $query = Link::orderBy('created_at', 'desc');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('url', 'like', "%{$search}%");
+            });
+        }
+
+        $links = $query->get();
         return view('admin.links', compact('links'));
     }
 

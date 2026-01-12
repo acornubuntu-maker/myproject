@@ -26,19 +26,29 @@ class ProfileController extends Controller
 
         // handle profile photo
         if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profile-photos', 'public');
+            try {
+                $file = $request->file('profile_photo');
+                // verify validity
+                if (!$file->isValid()) {
+                    return back()->withErrors(['profile_photo' => 'Uploaded file is not valid.']);
+                }
 
-            // delete old if exists
-            if ($user->profile_photo_path) {
-                Storage::disk('public')->delete($user->profile_photo_path);
+                $path = $file->store('profile-photos', 'public');
+
+                // delete old if exists
+                if ($user->profile_photo_path) {
+                    Storage::disk('public')->delete($user->profile_photo_path);
+                }
+
+                $user->profile_photo_path = $path;
+            } catch (\Exception $e) {
+                return back()->withErrors(['profile_photo' => 'Image upload failed: ' . $e->getMessage()]);
             }
-
-            $user->profile_photo_path = $path;
         }
 
         $user->name = $data['name'];
 
-        if (! empty($data['password'])) {
+        if (!empty($data['password'])) {
             $user->password = Hash::make($data['password']);
         }
 

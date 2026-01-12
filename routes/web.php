@@ -25,6 +25,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     // users
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::post('/admin/users/import', [UserController::class, 'import'])->name('admin.users.import');
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
@@ -50,6 +51,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 Route::middleware('auth')->group(function () {
     // user dashboard (authenticated users)
     Route::get('/user', [UserDashboardController::class, 'index'])->name('user.home');
+    Route::get('/user/links/{link}', [UserDashboardController::class, 'show'])->name('user.links.show');
+    Route::post('/user/links/{link}/notes', [UserDashboardController::class, 'storeNote'])->name('user.links.notes.store');
+    Route::delete('/user/notes/{note}', [UserDashboardController::class, 'destroyNote'])->name('user.links.notes.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -57,7 +61,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // auth scaffolding routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // fallback: any unmatched route -> login (guest) or role home if authenticated
 Route::fallback(function () {

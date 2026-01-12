@@ -10,9 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::with('links')->orderByDesc('created_at')->get();
+        $query = Group::with('links')->orderByDesc('created_at');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $groups = $query->get();
         $links = Link::orderBy('title')->get();
         return view('admin.groups', compact('groups', 'links'));
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Link extends Model
 {
-    protected $fillable = ['title','description','url','created_by'];
+    protected $fillable = ['title', 'description', 'url', 'created_by'];
 
     public function groups()
     {
@@ -16,5 +16,10 @@ class Link extends Model
     public function creator()
     {
         return $this->belongsTo(\App\Models\User::class, 'created_by');
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
     }
 }
